@@ -12,6 +12,54 @@
 		<maven.compiler.target>11</maven.compiler.target>
 	</properties>
 	
+	
+	
+	
+	
+	<!-- CONFIGURAÇÕES DE BUILD RESPONSÁVEIS POR INCLUIR AS DEPENDÊNCIAS NO 
+		.JAR FINAL -->
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.2</version>
+			</plugin>
+
+			<plugin>
+				<!-- DEFINE AS CONFIGURAÇÕES DO MAVEN ASSEMBLER -->
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<!--DEFINE QUAL É A CLASSE MAIN DA APLICAÇÃO -->
+							<mainClass>br.com.sample.MergePDF</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<!--ADICIONO AO NOME DO JAR FINAL UM COMPLEMENTO DIZENDO QUE ELE CONTÉM 
+							AS DEPENDÊNCIAS -->
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<!--DETERMINO QUE O JAR GERADO INCLUIRÁ AS DEPENDÊNCIAS E ELAS SERÃO 
+							EMPACOTADAS JUNTO COM O PROJETO EM UM ÚNICO JAR -->
+						<id>make-assembly</id>
+						<phase>package</phase> <!-- packaging phase -->
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+	
 	<dependencies>
 
 		<dependency>
